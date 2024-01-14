@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PII Analyzer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        h2 {
+            margin-top: 20px;
+            color: #333;
+        }
+
+        #result {
+            text-align: left;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>PII Analyzer</h1>
+    <form id="piiForm">
+        <label for="textInput">Enter Text:</label>
+        <textarea id="textInput" name="text" rows="4" cols="50"></textarea>
+        <br>
+        <button type="button" onclick="analyzePII()">Analyze PII</button>
+    </form>
+
+    <h2>Result:</h2>
+    <div id="result"></div>
+
+    <script>
+        function analyzePII() {
+            var textInput = document.getElementById('textInput').value;
+
+            fetch('/analyze-pii', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ text: textInput }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the result
+                var resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = '';
+
+                data.forEach(entry => {
+                    for (const [key, value] of Object.entries(entry)) {
+                        resultDiv.innerHTML += `<p>${key}: ${value}</p>`;
+                    }
+                });
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>

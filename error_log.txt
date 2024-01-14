@@ -1,0 +1,9 @@
+Error: [E050] Can't find model 'en_core_web_sm'. It doesn't seem to be a Python package or a valid path to a data directory.
+Traceback (most recent call last):
+  File "C:\Users\AnoopKaurBhullar\PycharmProjects\pythonProject3\main.py", line 49, in ExtractPII
+    nlp = spacy.load("en_core_web_sm")
+  File "C:\Users\AnoopKaurBhullar\PycharmProjects\pythonProject3\venv\lib\site-packages\spacy\__init__.py", line 51, in load
+    return util.load_model(
+  File "C:\Users\AnoopKaurBhullar\PycharmProjects\pythonProject3\venv\lib\site-packages\spacy\util.py", line 472, in load_model
+    raise IOError(Errors.E050.format(name=name))
+OSError: [E050] Can't find model 'en_core_web_sm'. It doesn't seem to be a Python package or a valid path to a data directory.
